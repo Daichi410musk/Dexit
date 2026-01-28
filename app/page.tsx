@@ -1,5 +1,10 @@
-import Link from "next/link";
-import { destinations } from "./routes/data";
+const data = [
+  { name: "バスタ新宿", exit: "南改札→新南口" },
+  { name: "NEWoMan新宿", exit: "南改札→新南口" },
+  { name: "JR新宿駅 西口（地上）", exit: "中央西改札→西口" },
+  { name: "JR新宿駅 東口（地上）", exit: "中央東改札→東口" },
+  { name: "伊勢丹新宿店", exit: "中央東改札→伊勢丹方面" },
+];
 
 export default function Home() {
   return (
@@ -13,34 +18,13 @@ export default function Home() {
       </header>
 
       <div className="max-w-lg mx-auto px-4 py-6">
-        <p className="text-sm text-gray-600 mb-4">
-          行きたい場所を選んでください
-        </p>
-
         <ul className="space-y-3">
-          {destinations.map((dest) => (
-            <li key={dest.id}>
-              <Link
-                href={`/destinations/${dest.id}`}
-                className="block bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all active:scale-[0.98]"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-800">{dest.name}</span>
-                  <svg
-                    className="w-5 h-5 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              </Link>
+          {data.map((item) => (
+            <li key={item.name} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+              <div className="flex items-center justify-between">
+                <span className="font-medium text-gray-800">{item.name}</span>
+                <span className="text-blue-600 text-sm font-medium">{item.exit}</span>
+              </div>
             </li>
           ))}
         </ul>
