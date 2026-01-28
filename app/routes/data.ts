@@ -1,53 +1,59 @@
-export type Step = {
-  instruction: string;
-  checkpoint?: string;
-};
-
-export type Route = {
+export type Exit = {
   id: string;
-  title: string;
-  via: string;
-  steps: Step[];
+  name: string;
+  steps: string[];
+  goal: string;
 };
 
-export const routes: Route[] = [
+export type Destination = {
+  id: string;
+  name: string;
+  exitId: string;
+};
+
+export const exits: Exit[] = [
   {
-    id: "marunouchi",
-    title: "丸の内線",
-    via: "西改札経由",
+    id: "minami-shinnanguchi",
+    name: "南改札→新南口",
     steps: [
-      { instruction: "西改札の案内板を探す" },
-      { instruction: "西改札を出る", checkpoint: "西改札を通過" },
-      { instruction: "改札を出たら左に曲がる" },
-      { instruction: "丸の内線の改札に到着", checkpoint: "丸の内線改札に到着" },
+      "JR新宿駅 南改札を出て右へ進む",
+      "「新南口・NEWoMan方面」の表示を追い続ける",
     ],
+    goal: "新南口出口に出る",
   },
   {
-    id: "odakyu",
-    title: "小田急線",
-    via: "中央西改札経由",
-    steps: [{ instruction: "中央西改札の案内板を探す" }],
-  },
-  {
-    id: "keio",
-    title: "京王線",
-    via: "京王線連絡口経由",
-    steps: [{ instruction: "京王口の案内板を探す" }],
-  },
-  {
-    id: "oedo",
-    title: "都営大江戸線・都営新宿線・京王新線",
-    via: "南改札経由",
+    id: "chuonishi-nishiguchi",
+    name: "中央西改札→西口",
     steps: [
-      { instruction: "南改札の案内板を探す" },
-      { instruction: "南改札を出る", checkpoint: "南改札を通過" },
-      { instruction: "改札を出たら右に曲がる" },
+      "JR新宿駅 中央西改札を出る",
+      "「西口方面」の表示を追って進む",
     ],
+    goal: "西口出口（地上）に出る",
   },
   {
-    id: "seibu",
-    title: "西武新宿線",
-    via: "東改札経由",
-    steps: [{ instruction: "東改札の案内板を探す" }],
+    id: "chuohigashi-higashiguchi",
+    name: "中央東改札→東口",
+    steps: [
+      "JR新宿駅 中央東改札を出る",
+      "「東口方面」へ進む（地下に降りない）",
+    ],
+    goal: "東口出口（地上）に出る",
   },
+  {
+    id: "chuohigashi-isetan",
+    name: "中央東改札→伊勢丹方面",
+    steps: [
+      "JR新宿駅 中央東改札を出る",
+      "「新宿三丁目・伊勢丹方面」の表示へ進み、地下通路を直進",
+    ],
+    goal: "伊勢丹方面出口に出る",
+  },
+];
+
+export const destinations: Destination[] = [
+  { id: "busta", name: "バスタ新宿", exitId: "minami-shinnanguchi" },
+  { id: "newoman", name: "NEWoMan新宿", exitId: "minami-shinnanguchi" },
+  { id: "west-exit", name: "JR新宿駅 西口（地上）", exitId: "chuonishi-nishiguchi" },
+  { id: "east-exit", name: "JR新宿駅 東口（地上）", exitId: "chuohigashi-higashiguchi" },
+  { id: "isetan", name: "伊勢丹新宿店", exitId: "chuohigashi-isetan" },
 ];
