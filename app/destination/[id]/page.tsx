@@ -48,7 +48,7 @@ export default async function DestinationPage({ params }: Props) {
                   width={800}
                   height={600}
                   className="w-full h-auto"
-                  priority={index === 0}
+                  priority
                 />
               )}
             </li>

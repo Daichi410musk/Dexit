@@ -109,8 +109,7 @@ export const destinations: Destination[] = [
       },
       {
         text: "改札を出て右手がNEWoMan新宿",
-        photo: "/photos/newoman-goal.png",
       },
     ],
   },
-  ];
+];
