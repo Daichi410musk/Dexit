@@ -1,5 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { destinations } from "../data";
+
+export const metadata: Metadata = {
+  title: "目的地一覧 | JR新宿駅 出口案内",
+  description:
+    "JR新宿駅の目的地一覧。バスタ新宿、NEWoMan、伊勢丹、ルミネなど、主要スポットへの最適な出口を一覧で確認できます。",
+  openGraph: {
+    title: "目的地一覧 | JR新宿駅 出口案内",
+    description:
+      "JR新宿駅の目的地一覧。主要スポットへの最適な出口を一覧で確認できます。",
+    locale: "ja_JP",
+  },
+};
 
 export default function PlacesPage() {
   const places = destinations.filter((item) => item.type === "place");

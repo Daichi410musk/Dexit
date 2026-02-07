@@ -1,5 +1,4 @@
-
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import { destinations } from "../../data";
 import BackButton from "../../components/BackButton";
@@ -7,6 +6,31 @@ import BackButton from "../../components/BackButton";
 type Props = {
   params: Promise<{ id: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const destination = destinations.find((d) => d.id === id);
+
+  if (!destination) {
+    return {
+      title: "見つかりません | JR新宿駅 出口案内",
+    };
+  }
+
+  const title = `${destination.name} への行き方 | JR新宿駅 出口案内`;
+  const description = `JR新宿駅から${destination.name}への行き方。${destination.exit}を利用します。写真付きでわかりやすく出口までの道順を案内します。`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      locale: "ja_JP",
+    },
+  };
+}
 
 export default async function DestinationPage({ params }: Props) {
   const { id } = await params;

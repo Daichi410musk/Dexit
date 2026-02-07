@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dexit-mauve.vercel.app"),
   title: "JR新宿駅 出口案内 | Dexit",
   description:
     "JR新宿駅の出口案内アプリ。バスタ新宿、NEWoMan、西口、東口、伊勢丹など、目的地別に最適な改札と出口をわかりやすく案内します。",

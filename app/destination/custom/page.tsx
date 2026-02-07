@@ -1,8 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { destinations } from "../../data";
+
+export const metadata: Metadata = {
+  title: "目的地検索 | JR新宿駅 出口案内",
+  description:
+    "JR新宿駅の目的地を検索して、最適な改札・出口を調べることができます。目的地名を入力するだけで道順を案内します。",
+  openGraph: {
+    title: "目的地検索 | JR新宿駅 出口案内",
+    description:
+      "JR新宿駅の目的地を検索して、最適な改札・出口を調べることができます。",
+    locale: "ja_JP",
+  },
+};
 
 type CustomSearchParams = {
   name?: string | string[];
