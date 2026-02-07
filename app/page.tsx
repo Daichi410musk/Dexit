@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { destinations } from "./data";
+import SearchForm from "./components/SearchForm";
 
 export default function Home() {
+  const places = destinations.filter((item) => item.type === "place");
+  const exits = destinations.filter((item) => item.type === "exit");
+  const featuredPlaces = places.slice(0, 3);
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <header className="bg-white shadow-sm sticky top-0 z-10">
@@ -13,38 +18,47 @@ export default function Home() {
       </header>
 
       <div className="max-w-lg mx-auto px-4 py-6">
-        <ul className="space-y-3">
-          {destinations.map((item) => (
-            <li key={item.id}>
-              <Link
-                href={`/destination/${item.id}`}
-                className="block bg-white rounded-xl shadow-sm border border-gray-100 p-4"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-800">{item.name}</span>
-                  <span className="text-blue-600 text-sm font-medium">
-                    {item.exit}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between mt-1">
-                  <span className="text-xs text-gray-400">
-                    タップで道順を見る
-                  </span>
-                  <span className="text-gray-400 text-xs">→</span>
-                </div>
-              </Link>
-            </li>
-          ))}
+        <SearchForm destinations={destinations} />
 
-          {/* Coming Soon カード */}
-          <li className="bg-gray-50 rounded-xl p-4 border border-dashed border-gray-300">
-            <div className="text-center text-gray-500">
-              <span className="text-lg">🚧</span>
-              <p className="mt-1 font-medium">他の目的地も準備中...</p>
-              <p className="text-xs mt-1">順次追加予定です</p>
-            </div>
-          </li>
-        </ul>
+        <section className="mb-4">
+          <h2 className="text-sm font-semibold text-gray-800">
+            出口の案内を見る
+          </h2>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {exits.map((item) => (
+              <Link
+                key={item.id}
+                href={`/destination/${item.id}`}
+                className="rounded-lg border border-gray-100 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-sm"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-sm font-semibold text-gray-800">
+            よく使う目的地
+          </h2>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {featuredPlaces.map((item) => (
+              <Link
+                key={item.id}
+                href={`/destination/${item.id}`}
+                className="rounded-lg border border-gray-100 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-sm"
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link
+              href="/places"
+              className="flex items-center justify-center text-sm font-semibold text-blue-600"
+            >
+              一覧を見る →
+            </Link>
+          </div>
+        </section>
       </div>
     </main>
   );

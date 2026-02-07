@@ -1,8 +1,8 @@
 
 
 import Image from "next/image";
-import Link from "next/link";
 import { destinations } from "../../data";
+import BackButton from "../../components/BackButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -20,13 +20,20 @@ export default async function DestinationPage({ params }: Props) {
     );
   }
 
+  const exitDestination = destination.exitId
+    ? destinations.find((d) => d.id === destination.exitId)
+    : null;
+
+  const steps =
+    destination.steps.length > 0
+      ? destination.steps
+      : exitDestination?.steps ?? [];
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-lg mx-auto px-4 py-4 flex items-center gap-3">
-          <Link href="/" className="text-gray-600 text-lg">
-            ←
-          </Link>
+          <BackButton />
           <div>
             <h1 className="font-bold text-gray-800">{destination.name}</h1>
             <p className="text-xs text-blue-600">{destination.exit}</p>
@@ -35,21 +42,35 @@ export default async function DestinationPage({ params }: Props) {
       </header>
 
       <div className="max-w-lg mx-auto py-4">
+        {exitDestination && (
+          <div className="mx-4 mb-4 rounded-xl bg-blue-50 border border-blue-100 px-4 py-3">
+            <p className="text-sm text-gray-800">
+              <span className="font-semibold">{destination.name}</span>へは
+              <span className="font-semibold">{exitDestination.name}</span>
+              を出て向かってください。
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              以下は出口までの案内です。
+            </p>
+          </div>
+        )}
+
         <ol className="space-y-4">
-          {destination.steps.map((step, index) => (
+          {steps.map((step, index) => (
             <li key={index}>
               <div className="bg-white border-l-4 border-pink-500 px-4 py-3">
                 <p className="font-bold text-gray-800">【{index + 1}】{step.text}</p>
               </div>
               {step.photo && (
-                <Image
-                  src={step.photo}
-                  alt={step.text}
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                  priority
-                />
+                <div className="w-full h-64 relative overflow-hidden">
+                  <Image
+                    src={step.photo}
+                    alt={step.text}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               )}
             </li>
           ))}
